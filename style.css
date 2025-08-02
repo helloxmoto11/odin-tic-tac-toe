@@ -1,0 +1,51 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    --line-color: black;
+}
+
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.game-board {
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+    height: 500px;
+    box-shadow: 2px 4px 8px gray;
+    border-radius: 10px;
+    background-color: lightgray;
+}
+
+.place {
+    flex: 33.33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 6rem;
+    line-height: 0;
+    font-family: "Roboto Light", sans-serif;
+    user-select: none;
+}
+
+.b-right {
+    border-right: 2px solid var(--line-color);
+}
+
+.b-left {
+    border-left: 2px solid var(--line-color);
+}
+
+.b-bottom {
+    border-bottom: 2px solid var(--line-color);
+}
+
+.b-top {
+    border-top: 2px solid var(--line-color);
+}
