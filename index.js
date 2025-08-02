@@ -22,7 +22,6 @@ const Game = (function () {
 })();
 
 const Display = (function () {
-    let updatingDisplay = false;
     const gameBoard = document.getElementById("game-board");
     const places = gameBoard.children;
     for (let i = 0; i < places.length; i++) {
