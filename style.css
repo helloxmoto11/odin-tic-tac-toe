@@ -5,12 +5,75 @@
     --line-color: black;
 }
 
+.titan-one-regular {
+    font-family: "Titan One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
 
 main {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
+    background-color: black;
+    min-width: 800px;
+}
+
+header {
+    flex: 1;
+    padding-top: 2rem;
+    width: 100%;
+    text-align: center;
+}
+
+.spacer {
+    width: 500px;
+}
+
+header div {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+header h3 {
+    font-size: 2.5rem;
+    flex: 1;
+    text-decoration: underline;
+}
+
+
+@keyframes growShrink {
+    0% {
+        font-size: 3.5rem;
+    }
+    50% {
+        font-size: 3.6rem;
+    }
+    100% {
+        font-size: 3.5rem;
+    }
+}
+
+.neon {
+    color: #00ff00;
+    text-shadow: 0 0 7px #fff,
+    0 0 10px #ff00ff, /* Neon Pink */ 0 0 21px #ff00ff,
+    0 0 42px #ff00ff,
+    0 0 82px #ff00ff,
+    0 0 92px #ff00ff,
+    0 0 102px #ff00ff,
+    0 0 151px #ff00ff;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+footer {
+    flex: 1;
 }
 
 .game-board {
@@ -18,9 +81,8 @@ main {
     flex-wrap: wrap;
     width: 500px;
     height: 500px;
-    box-shadow: 2px 4px 8px gray;
     border-radius: 10px;
-    background-color: lightgray;
+    background-color: #FF00FFFF;
 }
 
 .place {
@@ -30,8 +92,10 @@ main {
     align-items: center;
     font-size: 6rem;
     line-height: 0;
-    font-family: "Roboto Light", sans-serif;
+    font-family: "Titan One", sans-serif;
     user-select: none;
+    color: #00ff00;
+
 }
 
 .b-right {
