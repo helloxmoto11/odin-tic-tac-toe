@@ -38,24 +38,24 @@ header div {
     justify-content: space-between;
 }
 
+@keyframes growShrink {
+    0% {
+        font-size: 3rem;
+    }
+    50% {
+        font-size: 3.1rem;
+    }
+    100% {
+        font-size: 3rem;
+    }
+}
+
 header h3 {
     font-size: 2.5rem;
     flex: 1;
     text-decoration: underline;
 }
 
-
-@keyframes growShrink {
-    0% {
-        font-size: 3.5rem;
-    }
-    50% {
-        font-size: 3.6rem;
-    }
-    100% {
-        font-size: 3.5rem;
-    }
-}
 
 .neon {
     color: #00ff00;

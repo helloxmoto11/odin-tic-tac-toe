@@ -1,28 +1,20 @@
 const Game = (function () {
     let board = ['', '', '', '', '', '', '', '', '',]
     const playTurn = (index, marker) => {
-        if (board[index]) {
-            throw Error(`marker already in use at index ${index}.`);
-        }
         board[index] = marker;
     }
     const getBoard = () => board;
     const resetBoard = () => {
         board = ["", "", "", "", "", "", "", "", "",]
     }
-    const checkWinner = () => {
-        if (board[0] === 'X' && board[1] === 'X' && board[2] === 'X') {
-            setTimeout(function () {
+    const possibleWins = [[0, 1, 2], [0, 3, 6], [0, 4, 8], [1, 4, 7], [2, 4, 6], [2, 5, 8], [4, 5, 6], [6, 7, 8]]
 
-                alert("Player X wins")
-            },400)
-        }
-    }
-    return {getBoard, playTurn, resetBoard, checkWinner}
+    return {getBoard, playTurn, resetBoard, possibleWins};
 })();
 
 const Display = (function () {
     const gameBoard = document.getElementById("game-board");
+
     const places = gameBoard.children;
     for (let i = 0; i < places.length; i++) {
         places[i].addEventListener("click", (e) => {
@@ -32,14 +24,21 @@ const Display = (function () {
                     return;
                 }
                 const turn = Controller.whosTurn();
-                console.log(`turn: ${turn}`);
                 const markers = Controller.getMarkers();
-                const marker = turn === "p1" ? markers.p1 : markers.p2;
+                const marker = turn === "X" ? markers.x : markers.o;
                 Game.playTurn(i, marker)
                 updateDisplay(Game.getBoard());
-                Game.checkWinner();
-                Controller.toggleTurn();
+                Controller.checkWinner();
+                if (Controller.gameIsRunning()) {
+                    Controller.toggleTurn();
+                }
             }
+        })
+    }
+    const highlightWinner = (pWin) => {
+        pWin.forEach(index => {
+            places[index].style.backgroundColor = "#00ff00";
+            places[index].style.color = "#ff00ff";
         })
     }
     const updateDisplay = (board) => {
@@ -47,26 +46,62 @@ const Display = (function () {
             places[i].textContent = board[i];
         }
     }
-    return undefined;
+    return {highlightWinner};
 })();
 
 const Controller = (function () {
     let running = true;
-    let turn = "p1";
-    let markers = {}
-    const setMarkers = (playerOneMarker) => {
-        markers.p1 = playerOneMarker;
-        markers.p2 = playerOneMarker === "X" ? "O" : "X";
-    }
+    let turn = "X";
+    let playerXScore = 0;
+    let playerYScore = 0;
+    let markers = {x: "X", o: "O"};
+    const playerOneH3 = document.getElementById("player-1");
+    const playerTwoH3 = document.getElementById("player-2");
+    const animation = "growShrink 1s infinite";
+    playerOneH3.style.animation = animation;
+
     const getMarkers = () => markers;
+    const setGameOver = () => running = false;
     const gameIsRunning = () => running;
     const whosTurn = () => turn;
     const toggleTurn = () => {
-        turn = turn === "p1" ? turn = "p2" : "p1";
+        turn = turn === "X" ? turn = "O" : "X";
+        if (turn === "X") {
+            playerOneH3.style.animation = animation;
+            playerTwoH3.style.animation = undefined;
+        } else {
+            playerTwoH3.style.animation = animation;
+            playerOneH3.style.animation = undefined;
+        }
     }
-    return {gameIsRunning, setMarkers, getMarkers, whosTurn, toggleTurn}
+    const checkWinner = () => {
+        const board = Game.getBoard();
+        Game.possibleWins.forEach(pWin => {
+            let countX = 0;
+            let countO = 0;
+            for (let index of pWin) {
+                if (board[index] === "X")
+                    countX++;
+                if (board[index] === "O")
+                    countO++;
+            }
+            if (countX === 3) {
+                console.log("X is the winner")
+                console.log(pWin)
+                Display.highlightWinner(pWin)
+                Controller.setGameOver()
+                Game.resetBoard()
+            }
+            if (countO === 3) {
+                console.log("O is the winner")
+                console.log(pWin)
+                Display.highlightWinner(pWin)
+                Controller.setGameOver()
+                Game.resetBoard()
+            }
+
+
+        })
+    }
+    return {gameIsRunning, setGameOver, getMarkers, whosTurn, toggleTurn, checkWinner}
 })();
-Controller.setMarkers("X");
-// while (Controller.gameIsRunning()) {
-//
-// }
